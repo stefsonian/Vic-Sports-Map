@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="dev/css/styles.css">
+  <title>T-MAP</title>
+</head>
+<body>
+    <div class="container-fluid">
+      <div class="row flex-row">
+        <div class="col-md-3" id="menu-panel">
+          <h1>Menu</h1>
+          <p>This is the side panel</p>
+          <div id="options">
+            <input class="btn btn-success" id="show-listings" type="button" value="Show Listings">
+            <input class="btn btn-warning" id="hide-listings" type="button" value="Hide Listings">
+          </div> <!-- options -->
+        </div> <!-- menu-panel -->
+
+        <div class="col-md-9" id="map-panel">
+          <h1>Mappy</h1>
+          <p>This is the main panel</p>
+        </div> <!-- map-panel -->
+      </div> <!-- row -->
+    </div> <!-- container -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script>
+    var map;
+    function initMap() {
+      // Constructor creates a new map - only center and zoom are required.
+      map = new google.maps.Map(document.getElementById('map-panel'), {
+        center: {lat: 40.7413549, lng: -73.9980244},
+        zoom: 13
+      });
+      var tribeca = {lat: 40.719526, lng: -74.0082934};
+      var marker = new google.maps.Marker({
+        position: tribeca,
+        map: map,
+        title: 'First Marker!'
+      });
+    }
+  </script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqQCJP3bsnODpjLx0dPilCEvstm20w7uY&v=3&callback=initMap">
+  </script>
+  <script async defer src="dev/js/mappy.js"></script>
+  
+</body>
+</html>
