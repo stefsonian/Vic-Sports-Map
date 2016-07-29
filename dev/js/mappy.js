@@ -1,4 +1,4 @@
-$.getJSON( "dev/js/testLoc.json", function( data ) {
+$.getJSON( "dev/data/kbh_pretty.json", function( data ) {
     addLocationsToMap(data);
     console.log( "Load was performed." );
 }).fail(function (jqxhr, status, error) { 
@@ -18,8 +18,9 @@ var addLocationsToMap = function(locations) {
     // The following group uses the location array to create an array of markers on initialize.
     for (var i = 0; i < locations.length; i++) {
         // Get the position from the location array.
-        var position = locations[i].location;
-        var title = locations[i].title;
+        var pos = {"lat": locations[i].Latitude, "lng": locations[i].Longitude};
+        var position = pos;
+        var title = locations[i].Street;
         // Create a marker per location, and put into markers array.
         var marker = new google.maps.Marker({
             position: position,
