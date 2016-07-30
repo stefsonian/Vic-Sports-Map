@@ -1,9 +1,12 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+
 html {
     height: 100%;
 }
 
 body, .container-fluid {
     min-height: 100vh;
+    /*font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;*/
 }
 
 .flex-row {
@@ -16,10 +19,18 @@ body, .container-fluid {
 }
 
 #menu-panel {
-    background-color: black;
-    color: lightgrey;
+    background-color: #5C5C5C;
+    color: #f4f4f4;
 }
 
 #map-panel {
 
 }
+
+.option {
+    max-width: 100%;
+    font-size: 1.3em;
+
+}
+
+

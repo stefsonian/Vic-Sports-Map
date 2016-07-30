@@ -5,7 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
   <link rel="stylesheet" href="dev/css/styles.css">
+  <link rel="stylesheet" href="dev/css/onoff_switch.css">
   <title>T-MAP</title>
 </head>
 <body>
@@ -14,9 +16,49 @@
         <div class="col-md-3" id="menu-panel">
           <h1>Menu</h1>
           <p>This is the side panel</p>
-          <div id="options">
-            <input class="btn btn-success" id="show-listings" type="button" value="Show Listings">
-            <input class="btn btn-warning" id="hide-listings" type="button" value="Hide Listings">
+          <div id="options container-fluid">
+
+            <div class="option row" id="option-handicap">
+              <p class="switch-label col-md-8"><span class="fa fa-wheelchair"></span> Adgang</p>
+              <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-handicap">
+                <label class="onoffswitch-label" for="switch-handicap"></label>
+              </div> <!-- onoffswitch -->
+            </div> <!-- option -->
+
+            <div class="option row" id="option-kungratis">
+              <p class="switch-label col-md-8"><span class="fa fa-usd"></span> Kun gratis</p>
+              <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-kungratis">
+                <label class="onoffswitch-label" for="switch-kungratis"></label>
+              </div> <!-- onoffswitch -->
+            </div> <!-- option -->
+
+            <div class="option row" id="option-bemanding">
+              <p class="switch-label col-md-8"><span class="fa fa-user"></span> Bemanding</p>
+              <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-bemanding">
+                <label class="onoffswitch-label" for="switch-bemanding"></label>
+              </div> <!-- onoffswitch -->
+            </div> <!-- option -->
+
+            <div class="option row" id="option-puslebord">
+              <p class="switch-label col-md-8"><span class="fa fa-child"></span> Puslebord</p>
+              <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-puslebord">
+                <label class="onoffswitch-label" for="switch-puslebord"></label>
+              </div> <!-- onoffswitch -->
+            </div> <!-- option -->
+
+            <div class="option row" id="option-kanylebeholder">
+              <p class="switch-label col-md-8"><span class="fa fa-trash"></span> Kanylebeholder</p>
+              <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-kanylebeholder">
+                <label class="onoffswitch-label" for="switch-kanylebeholder"></label>
+              </div> <!-- onoffswitch -->
+            </div> <!-- option -->
+
+
           </div> <!-- options -->
         </div> <!-- menu-panel -->
 

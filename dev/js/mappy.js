@@ -1,5 +1,6 @@
 $.getJSON( "dev/data/kbh_pretty.json", function( data ) {
     addLocationsToMap(data);
+    showListings();
     console.log( "Load was performed." );
 }).fail(function (jqxhr, status, error) { 
     console.log('error', status, error) }
@@ -15,15 +16,27 @@ var addLocationsToMap = function(locations) {
 
     var largeInfowindow = new google.maps.InfoWindow();
 
+    //Icons for the map markers
+    var markerStarter = "https://chart.googleapis.com/chart?chst=d_map_pin_TYPE&chld=ITEM|COLOR";
+    var icons = {
+        "free" : {"type": "letter", "item": "%E2%80%A2", "color": "ADDE63"},
+        "free_disabled": {"type": "icon", "item": "wheelchair", "color": "ADDE63"},
+        "pay" : {"type": "letter", "item": "%E2%80%A2", "color": "FE7569"},
+        "pay_disabled": {"type": "icon", "item": "wheelchair", "color": "FE7569"}
+    };
+    
     // The following group uses the location array to create an array of markers on initialize.
     for (var i = 0; i < locations.length; i++) {
         // Get the position from the location array.
+        
         var pos = {"lat": locations[i].Latitude, "lng": locations[i].Longitude};
         var position = pos;
         var title = locations[i].Street;
         // Create a marker per location, and put into markers array.
         var marker = new google.maps.Marker({
             position: position,
+            //icon: icons.free,
+            //icon: 'https://chart.googleapis.com/chart?chst=d_bubble_icon_text_small&chld=ski|bb|Wheeee!|FFFFFF|000000',
             title: title,
             animation: google.maps.Animation.DROP,
             id: i
@@ -38,10 +51,10 @@ var addLocationsToMap = function(locations) {
 }
 
 
-document.getElementById('show-listings')
-    .addEventListener('click', showListings);
-document.getElementById('hide-listings')
-    .addEventListener('click', hideListings);
+// document.getElementById('show-listings')
+//     .addEventListener('click', showListings);
+// document.getElementById('hide-listings')
+//     .addEventListener('click', hideListings);
 
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
@@ -77,4 +90,6 @@ function hideListings() {
         markers[i].setMap(null);
     }
 }
+
+
 
