@@ -63,8 +63,9 @@
           <div class="information container">
             <div class="row">
               <div class="col-md-12">
-                
+                <p id="marker-id" data-bind="text: currentMarkerID">16</p>
               </div> <!-- col-md-12 -->
+              <button class="btn btn-info" data-bind="click: showMorsel">Log marker</button>
             </div> <!-- row -->
           </div> <!-- information -->
         </div> <!-- menu-panel -->
@@ -137,6 +138,8 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqQCJP3bsnODpjLx0dPilCEvstm20w7uY&v=3&callback=initMap">
   </script>
   <script async defer src="dev/js/mappy.js"></script>
+  <script async defer src="dev/js/knockout.js"></script>
+  <script async defer src="dev/js/ko.js"></script>
   
 </body>
 </html>

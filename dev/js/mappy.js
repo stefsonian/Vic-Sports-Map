@@ -1,14 +1,16 @@
-$.getJSON( "dev/data/kbh_pretty.json", function( data ) {
-    addLocationsToMap(data);
-    showListings();
-    console.log( "Load was performed." );
-}).fail(function (jqxhr, status, error) { 
-    console.log('error', status, error) }
-);
+// $.getJSON( "dev/data/kbh_pretty.json", function( data ) {
+//     addLocationsToMap(data); //add but don't show locations to map
+//     showListings(); //show listings on map
+//     appvm.setData(data);
+//     console.log( "Load was performed." );
+// }).fail(function (jqxhr, status, error) { 
+//     console.log('error', status, error) }
+// );
 
 
 // Create a new blank array for all the listing markers.
 var markers = [];
+var clickedMarker;
 
 var addLocationsToMap = function(locations) {
     // These are the real estate listings that will be shown to the user.
@@ -46,6 +48,9 @@ var addLocationsToMap = function(locations) {
         // Create an onclick event to open an infowindow at each marker.
         marker.addListener('click', function () {
             populateInfoWindow(this, largeInfowindow);
+            //$('#marker-id').text(String(this.id)).trigger('change');
+            appvm.currentMarkerID(this.id);
+            clickedMarker = this;
         });
     }
 }
