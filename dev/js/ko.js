@@ -27,24 +27,20 @@
 
 function AppViewModel() {
     self = this;
-    self.data = null;
+    //Load data from local file
     $.getJSON( "dev/data/kbh_pretty.json", function( data ) {
         self.data = data;
-        addLocationsToMap(data); //add but don't show locations to map
-        showListings(); //show listings on map
+        mapView.init(data); //add but don't show locations to map
         console.log( "Load was performed." );
     }).fail(function (jqxhr, status, error) { 
         console.log('error', status, error) }
     );
 
-
     self.currentMarkerID = ko.observable(20);
 
-
-
-    this.showMorsel = function () {
-        console.log(self.currentMarkerID());
-        console.log(self.data[self.currentMarkerID()]);
+    self.showMorsel = function () {
+        console.log(appvm.currentMarkerID());
+        console.log(appvm.data[appvm.currentMarkerID()]);
     }
 }
 
