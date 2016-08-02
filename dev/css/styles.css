@@ -19,8 +19,9 @@ body, .container-fluid {
 }
 
 #menu-panel {
-    background-color: #5C5C5C;
-    color: #f4f4f4;
+    color: #F8FDFF;
+    background-color: #03618A;
+    text-align: center;
 }
 
 #map-panel {
@@ -33,5 +34,20 @@ body, .container-fluid {
 
 }
 
+.fa {
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 
+.information, .filters {
+    margin-top: 25px;
+    color: #373737;
+}
+
+#info-panel {
+    display: none;
+}
+
+.mapMarkerTitle {
+    font-size: 0.9em;
+}
 

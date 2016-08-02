@@ -13,38 +13,46 @@
 <body>
     <div class="container-fluid">
       <div class="row flex-row">
-        <div class="col-md-3" id="menu-panel">
-          <h1>Menu</h1>
-          <p>This is the side panel</p>
-          <div id="options container-fluid">
-            <div class="container option">
-              <div class="row">
-                <div class="col-md-12" data-bind="foreach: buttons">
-                  <button class="btn btn-default" data-bind="text: title, click: filterUpdate"></button>
+        <div class="col-sm-3 col-xs-1" id="menu-panel">
+          <div class="row intro">
+            <div class="col-sm-offset-1 col-sm-10">
+              <h1>Menu</h1>
+              <p>Use the filters below to narrow your search</p>
+            </div>
+          </div>
+
+
+              <div class="row filters">
+                <div class="col-sm-offset-1 col-sm-10" data-bind="foreach: buttons">
+                  <button class="btn btn-default btn-block" data-bind="text: title, click: filterUpdate, attr: {id: title}"></button>
                 </div> <!-- col-md-12 -->
               </div> <!-- row -->
-            </div> <!-- option -->
-          </div> <!-- options -->
+
           
-          <div class="information container">
-            <div class="row">
-              <div class="col-md-12" data-bind="foreach: locationInfo">
-                <p data-bind="text: label"></p>
-                <p data-bind="text: value"></p>
+          
+            <div class="row information">
+              <div class="col-sm-offset-1 col-sm-10">
+                <div class="panel panel-default" id="info-panel">
+                  <div class="panel-heading">
+                    <h4 class="panel-title" data-bind="text: infoTitle">Noget</h4>
+                  </div>
+
+                  <div class="panel-body" data-bind="foreach: locationInfo">
+                    <p data-bind="text: label + ': ' + value"></p>
+                  </div>
+                </div>
               </div> <!-- col-md-12 -->
             </div> <!-- row -->
-          </div> <!-- information -->
+          
 
         </div> <!-- menu-panel -->
 
-        <div class="col-md-9" id="map-panel">
+        <div class="col-sm-9 col-xs-11" id="map-panel">
           <h1>Mappy</h1>
           <p>This is the main panel</p>
         </div> <!-- map-panel -->
       </div> <!-- row -->
     </div> <!-- container -->
-
-
 
 
 
@@ -94,7 +102,8 @@
       // Constructor creates a new map - only center and zoom are required.
       map = new google.maps.Map(document.getElementById('map-panel'), {
         center: {lat: 55.6761, lng: 12.5683},
-        zoom: 12
+        zoom: 13,
+        styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}]
       });
     }
   </script>
@@ -111,3 +120,6 @@
   
 </body>
 </html>
+
+
+

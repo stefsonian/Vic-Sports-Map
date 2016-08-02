@@ -42,7 +42,7 @@ function AppViewModel() {
 
 
     // Store the marker-id when the user clicks on one
-    self.currentMarkerID = ko.observable(20);
+    self.currentMarkerID = ko.observable();
 
     filterUpdate = function(filterButton) {
         var currentState = filterButton.state;
@@ -61,11 +61,12 @@ function AppViewModel() {
     }
 
     self.buttons = ko.observableArray([
-        {"title": "Free", "state": false},
-        {"title": "Disabled", "state": false},
-        {"title": "Manned", "state": false}]);
+        {"title": "Free", "state": false, "icon": "fa fa-wheelchair"},
+        {"title": "Disabled", "state": false, "icon": "fa fa-wheelchair"},
+        {"title": "Manned", "state": false, "icon": "fa fa-wheelchair"}]);
 
     self.locationInfo = ko.observableArray([]);
+    self.infoTitle = ko.observable();
 
     // the infoLine array holds location details to be displayed
     // in the side panel when the user clicks on a marker.
@@ -83,7 +84,8 @@ function AppViewModel() {
         $.each(info, function(idx, object) {
             appvm.locationInfo.push(object);
         });
-        // console.log(appvm.infoLine());
+        appvm.infoTitle(details.place);
+        $('#info-panel').show();
     });      
     
 
