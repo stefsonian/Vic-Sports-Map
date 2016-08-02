@@ -1,22 +1,66 @@
-var mapView = {
+var mapModel = {
     init: function(data) {
         self = this;
         self.data = data;
-        markers = [];
-        self.addLocationsToMap(data);
+        self.markers = [];
+        mapView.init();
+        mapView.addLocationsToMap(data);
+        mapView.renderListings(self.markers, true);
+    },
+
+    toggleAmenityState: function(amenity) {
+        if (amenity) {
+            self.amenityStates[amenity] = !(self.amenityStates[amenity]);
+        } else {
+            self.amenityStates.KunGratis = false;
+            self.amenityStates.Handicap = false;
+            self.amenityStates.Bemandet = false;
+        }
+        self.setMarkerState();
+    },
+
+    setMarkerState : function(filterButtons) {
+        var markersToUpdate = []; // hold the markes we're going to update
+        //console.log(filterButtons);
+        // check each location against each filter and set appropriate display status.
+        // if a marker's display status changes, then add it to the markesToUpdate.
+        $.each(self.data, function(markerIdx, location) {
+            var marker = self.markers[markerIdx];
+            var markerShouldDisplay = true;
+            $.each(filterButtons, function(btnIdx, button) {
+                var amenity = button['title'].toLowerCase();
+                var required = button['state'];
+       
+                if (required && !location[amenity]) markerShouldDisplay = false;
+            });
+            
+            if (markerShouldDisplay && !marker.displayStatus) {
+                self.markers[markerIdx].displayStatus = true;
+                markersToUpdate.push(marker); 
+            }
+
+            if (!markerShouldDisplay && marker.displayStatus) {
+                self.markers[markerIdx].displayStatus = false;
+                markersToUpdate.push(marker); 
+            }
+        });
+        mapView.renderListings(markersToUpdate);
+    }
+}
+
+var mapView = {
+    init: function() {
         largeInfowindow = new google.maps.InfoWindow();
-        self.renderListings();
     },
 
     addLocationsToMap: function(locations) {
-        
         // The following group uses the location array to create an array of markers on initialize.
         for (var i = 0; i < locations.length; i++) {
             // Get the position from the location array.
             
-            var pos = {"lat": locations[i].Latitude, "lng": locations[i].Longitude};
+            var pos = {"lat": locations[i].latitude, "lng": locations[i].longitude};
             var position = pos;
-            var title = locations[i].Street;
+            var title = locations[i].place;
             // Create a marker per location, and put into markers array.
             var marker = new google.maps.Marker({
                 position: position,
@@ -24,16 +68,19 @@ var mapView = {
                 //icon: 'https://chart.googleapis.com/chart?chst=d_bubble_icon_text_small&chld=ski|bb|Wheeee!|FFFFFF|000000',
                 title: title,
                 animation: google.maps.Animation.DROP,
-                id: i
+                id: i,
+                displayStatus: true // used in the render function toggle show or not show.
             });
-            // Push the marker to our array of markers.
-            markers.push(marker);
             // Create an onclick event to open an infowindow at each marker.
             marker.addListener('click', function () {
-                self.populateInfoWindow(this, largeInfowindow);
+                mapView.populateInfoWindow(this, largeInfowindow);
                 //$('#marker-id').text(String(this.id)).trigger('change');
                 appvm.currentMarkerID(this.id);
             });
+
+            // Push the marker to the array of markers and set to active.
+            marker.isActive = true;
+            mapModel.markers.push(marker);
         }
     },
 
@@ -53,22 +100,15 @@ var mapView = {
         }
     },
 
-    renderListings: function() {
+    renderListings: function(markers, fitBounds=false) {
         // This function will loop through the markers array and display them all.
         var bounds = new google.maps.LatLngBounds();
         // Extend the boundaries of the map for each marker and display the marker
         for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(map);
+            markers[i].displayStatus ? markers[i].setMap(map) : markers[i].setMap(null);
             bounds.extend(markers[i].position);
         }
-        map.fitBounds(bounds);
-    },
-
-    hideListings: function() {
-        // This function will loop through the listings and hide them all.
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(null);
-        }        
+        if (fitBounds) map.fitBounds(bounds);
     }
 }
 

@@ -17,57 +17,24 @@
           <h1>Menu</h1>
           <p>This is the side panel</p>
           <div id="options container-fluid">
-
-            <div class="option row" id="option-handicap">
-              <p class="switch-label col-md-8"><span class="fa fa-wheelchair"></span> Adgang</p>
-              <div class="onoffswitch">
-                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-handicap">
-                <label class="onoffswitch-label" for="switch-handicap"></label>
-              </div> <!-- onoffswitch -->
+            <div class="container option">
+              <div class="row">
+                <div class="col-md-12" data-bind="foreach: buttons">
+                  <button class="btn btn-default" data-bind="text: title, click: filterUpdate"></button>
+                </div> <!-- col-md-12 -->
+              </div> <!-- row -->
             </div> <!-- option -->
-
-            <div class="option row" id="option-kungratis">
-              <p class="switch-label col-md-8"><span class="fa fa-usd"></span> Kun gratis</p>
-              <div class="onoffswitch">
-                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-kungratis">
-                <label class="onoffswitch-label" for="switch-kungratis"></label>
-              </div> <!-- onoffswitch -->
-            </div> <!-- option -->
-
-            <div class="option row" id="option-bemanding">
-              <p class="switch-label col-md-8"><span class="fa fa-user"></span> Bemanding</p>
-              <div class="onoffswitch">
-                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-bemanding">
-                <label class="onoffswitch-label" for="switch-bemanding"></label>
-              </div> <!-- onoffswitch -->
-            </div> <!-- option -->
-
-            <div class="option row" id="option-puslebord">
-              <p class="switch-label col-md-8"><span class="fa fa-child"></span> Puslebord</p>
-              <div class="onoffswitch">
-                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-puslebord">
-                <label class="onoffswitch-label" for="switch-puslebord"></label>
-              </div> <!-- onoffswitch -->
-            </div> <!-- option -->
-
-            <div class="option row" id="option-kanylebeholder">
-              <p class="switch-label col-md-8"><span class="fa fa-trash"></span> Kanylebeholder</p>
-              <div class="onoffswitch">
-                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch-kanylebeholder">
-                <label class="onoffswitch-label" for="switch-kanylebeholder"></label>
-              </div> <!-- onoffswitch -->
-            </div> <!-- option -->
-
           </div> <!-- options -->
-
+          
           <div class="information container">
             <div class="row">
-              <div class="col-md-12">
-                <p id="marker-id" data-bind="text: currentMarkerID">16</p>
+              <div class="col-md-12" data-bind="foreach: locationInfo">
+                <p data-bind="text: label"></p>
+                <p data-bind="text: value"></p>
               </div> <!-- col-md-12 -->
-              <button class="btn btn-info" data-bind="click: showMorsel">Log marker</button>
             </div> <!-- row -->
           </div> <!-- information -->
+
         </div> <!-- menu-panel -->
 
         <div class="col-md-9" id="map-panel">
@@ -122,6 +89,7 @@
 
   <script>
     var map;
+    console.log("i got to the mapping script");
     function initMap() {
       // Constructor creates a new map - only center and zoom are required.
       map = new google.maps.Map(document.getElementById('map-panel'), {
@@ -134,7 +102,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  <script async defer
+  <script 
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqQCJP3bsnODpjLx0dPilCEvstm20w7uY&v=3&callback=initMap">
   </script>
   <script defer src="dev/js/mappy.js"></script>
