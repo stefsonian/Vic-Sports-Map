@@ -35,7 +35,20 @@ body, .container-fluid {
 }
 
 .fa {
-    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    /*font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+    line-height: 25px;
+    vertical-align: middle;
+    /*font-weight: bold;*/
+}
+
+.filterButtons {
+    height: 25px;
+}
+
+.filterButtons > a {
+    line-height: 25px;
+    margin-top: 10px;
+    width: 100%;
 }
 
 .information, .filters {
@@ -51,7 +64,10 @@ body, .container-fluid {
     font-size: 0.9em;
 }
 
-.btn-default {
-    /*background-color: #DB9D00;*/
+.btn-info {
+    background-color: #46bcec;
+    letter-spacing: 0.1em;
+    font-size: 1.3em;
+    vertical-align: middle;
 }
 
