@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
   <link rel="stylesheet" href="dev/css/styles.css">
-  <link rel="stylesheet" href="dev/css/onoff_switch.css">
+  <link rel="stylesheet" href="dev/css/starTrekButtons/style.css">
   <title>T-MAP</title>
 </head>
 <body>
@@ -23,8 +23,8 @@
 
 
               <div class="row filters">
-                <div class="col-sm-offset-1 col-sm-10" data-bind="foreach: buttons">
-                  <button class="btn btn-default btn-block" data-bind="text: title, click: filterUpdate, attr: {id: title}"></button>
+                <div class="col-sm-offset-0 col-sm-12" data-bind="foreach: buttons">
+                  <button class="btn btn-info btn-block" data-bind="text: title, click: filterUpdate, attr: {id: title}"></button>
                 </div> <!-- col-md-12 -->
               </div> <!-- row -->
 
@@ -103,7 +103,104 @@
       map = new google.maps.Map(document.getElementById('map-panel'), {
         center: {lat: 55.6761, lng: 12.5683},
         zoom: 13,
-        styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}]
+        styles: [
+  {
+    "featureType": "administrative",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#444444"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape",
+    "elementType": "all",
+    "stylers": [
+      {
+        "color": "#f2f2f2"
+      }
+    ]
+  },
+  // {
+  //   "featureType": "poi",
+  //   "elementType": "all",
+  //   "stylers": [
+  //     {
+  //       "visibility": "off"
+  //     }
+  //   ]
+  // },
+    {
+    "featureType": "poi",
+    "elementType": "all",
+    "stylers": [
+                {
+                    "hue": "#00FF6A"
+                },
+                {
+                    "saturation": -1.0989010989011234
+                },
+                {
+                    "lightness": 56.200000000000017
+                },
+                {
+                    "gamma": 1
+                }
+            ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "all",
+    "stylers": [
+      {
+        "saturation": -100
+      },
+      {
+        "lightness": 45
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "all",
+    "stylers": [
+      {
+        "visibility": "simplified"
+      }
+    ]
+  },
+  {
+    "featureType": "road.arterial",
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "elementType": "all",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "all",
+    "stylers": [
+      {
+        "color": "#46bcec"
+      },
+      {
+        "visibility": "on"
+      }
+    ]
+  }
+]
       });
     }
   </script>

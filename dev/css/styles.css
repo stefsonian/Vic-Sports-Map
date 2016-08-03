@@ -51,3 +51,7 @@ body, .container-fluid {
     font-size: 0.9em;
 }
 
+.btn-default {
+    /*background-color: #DB9D00;*/
+}
+
