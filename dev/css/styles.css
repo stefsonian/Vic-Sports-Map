@@ -18,14 +18,21 @@ body, .container-fluid {
     height: 100vh;
 }
 
-#menu-panel {
+#menu {
     color: #F8FDFF;
     background-color: #03618A;
     text-align: center;
 }
 
 #map-panel {
+    height: 100vh;
+}
 
+#panel {
+    z-index: 1000;
+    position:absolute;
+    left:10px;
+    top: 50px;
 }
 
 .option {
@@ -41,11 +48,11 @@ body, .container-fluid {
     /*font-weight: bold;*/
 }
 
-.filterButtons {
+#filterButtons {
     height: 25px;
 }
 
-.filterButtons > a {
+#filterButtons > a {
     line-height: 25px;
     margin-top: 10px;
     width: 100%;

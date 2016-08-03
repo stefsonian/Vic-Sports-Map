@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="dev/css/styles.css">
+  <link rel="stylesheet" href="dev/css/buttons.css">
+  <link rel="stylesheet" href="node_modules/slideout/css/index.css">
+  <title>T-MAP</title>
+</head>
+<body>
+    <div class="container-fluid">
+      <div class="row flex-row">
+        <div class="col-xs-3" id="menu">
+          <div class="row intro">
+            <div class="col-sm-offset-1 col-sm-10">
+              <h1>Menu</h1>
+              <h3>Show</h3>
+            </div>
+          </div>
+
+
+              <div class="row">
+                <div class="col-xs-offset-0 col-sm-12 filterButtons">
+                  <a href="#" class="customButton">
+                    <i class="fa fa-home fa-fw fa-lg pull-left" aria-hidden="true"></i>All
+                  </a>
+                
+                  <a href="#" class="customButton">
+                    <i class="fa fa-wheelchair fa-fw fa-lg pull-left" aria-hidden="true"></i>Disabled access
+                  </a>
+                
+                </div> <!-- col-md-12 -->
+              </div> <!-- row -->
+
+          
+          
+            <div class="row information">
+              <div class="col-xs-offset-0 col-xs-10">
+                <div class="panel panel-default" id="info-panel">
+                  <div class="panel-heading">
+                    <h4 class="panel-title" data-bind="text: infoTitle">Noget</h4>
+                  </div>
+
+                  <div class="panel-body" data-bind="foreach: locationInfo">
+                    <p data-bind="text: label + ': ' + value"></p>
+                  </div>
+                </div>
+              </div> <!-- col-md-12 -->
+            </div> <!-- row -->
+          
+
+        </div> <!-- menu-panel -->
+
+        <div class="col-sm-9 col-xs-9">
+          <div class="row" id="map-panel">
+            
+          </div>
+          <main id="panel">
+            <header>
+              <button class="toggle-button">☰</button>
+              <h2>Panel</h2>
+            </header>
+          </main>
+        </div> <!-- map-panel -->
+      </div> <!-- row -->
+    </div> <!-- container -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="node_modules/slideout/dist/slideout.min.js"></script>
+    <script>
+      var slideout = new Slideout({
+        'panel': document.getElementById('panel'),
+        'menu': document.getElementById('menu'),
+        'padding': 256,
+        'tolerance': 70
+      });
+
+      // Toggle button
+      document.querySelector('.toggle-button').addEventListener('click', function() {
+        slideout.toggle();
+      });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script>
+    var map;
+    console.log("i got to the mapping script");
+    function initMap() {
+      // Constructor creates a new map - only center and zoom are required.
+      map = new google.maps.Map(document.getElementById('map-panel'), {
+        center: {lat: 55.6761, lng: 12.5683},
+        zoom: 13,
+        styles: [
+  {
+    "featureType": "administrative",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#444444"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape",
+    "elementType": "all",
+    "stylers": [
+      {
+        "color": "#f2f2f2"
+      }
+    ]
+  },
+  // {
+  //   "featureType": "poi",
+  //   "elementType": "all",
+  //   "stylers": [
+  //     {
+  //       "visibility": "off"
+  //     }
+  //   ]
+  // },
+    {
+    "featureType": "poi",
+    "elementType": "all",
+    "stylers": [
+                {
+                    "hue": "#00FF6A"
+                },
+                {
+                    "saturation": -1.0989010989011234
+                },
+                {
+                    "lightness": 56.200000000000017
+                },
+                {
+                    "gamma": 1
+                }
+            ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "all",
+    "stylers": [
+      {
+        "saturation": -100
+      },
+      {
+        "lightness": 45
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "all",
+    "stylers": [
+      {
+        "visibility": "simplified"
+      }
+    ]
+  },
+  {
+    "featureType": "road.arterial",
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "elementType": "all",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "all",
+    "stylers": [
+      {
+        "color": "#46bcec"
+      },
+      {
+        "visibility": "on"
+      }
+    ]
+  }
+]
+      });
+    }
+  </script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script 
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqQCJP3bsnODpjLx0dPilCEvstm20w7uY&v=3&callback=initMap">
+  </script>
+  <script defer src="dev/js/mappy.js"></script>
+  <script defer src="dev/js/knockout.js"></script>
+  <script defer src="dev/js/ko.js"></script>
+  
+</body>
+</html>
+
+
+
