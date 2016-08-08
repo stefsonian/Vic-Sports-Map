@@ -1,24 +1,181 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
 
-html {
-    height: 100%;
+body {
+
+    color: #F8FDFF;
+    background-color: #03618A;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    overflow: hidden;
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
 }
 
-body, .container-fluid {
-    min-height: 100vh;
-    /*font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+h1 {
+    display: inline-block;
 }
 
-.flex-row {
+.app-panel {
+    height: 100vh;
+}
+
+#menu-panel {
+  position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background: rgba(54, 25, 25, .7);
+    width: 256px;
+    background-color: #03618A;
+}
+
+#map-panel {
+    position: absolute;
+    left: 0; top: 0;
+    width: calc(100% - 256px);
+}
+
+#map-panel.full-screen {
+    width: 100%;
+}
+
+
+
+#map-cover {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 5;
+    padding: 1px;
+    background-color: transparent;
+    box-shadow: none;
+    border: 1px solid black;
+}
+
+/*#menu-header {
+    width: 100%;
+}*/
+
+.fa {
+    line-height: 25px;
+    vertical-align: middle;
+}
+
+.filterButton {
+    line-height: 25px;
+    margin-top: 10px;
+    width: 60%;
+    max-width: 100%;
+}
+
+
+.flex-container {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
     flex-wrap: wrap;
-    height: 100vh;
+    width: 100%;
+    justify-content: center;
 }
 
-#menu {
+.toggle-button {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 2.5em;
+    background-color: transparent;
+    box-shadow: none;
+    border: 0;
+    padding: 0;
+
+}
+
+#app-header, #filter-header, #info-box {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 2.2em;
+    letter-spacing: 0.08em;
+}
+
+#filter-header {
+    font-size: 1.4em;
+}
+
+#info-box {
+    font-size: 1.1em;
+    height: 240px;
+    margin-top: 20;
+    margin-left: auto;
+    margin-right: auto;
+    width: 190px;
+    border: 2px solid #E6E6E6;
+    background-color:transparent;
+    color: #E6E6E6;
+    border-radius: 18px;
+
+}
+
+#info-header {
+    box-sizing: border-box;
+    word-wrap: break-word;
+    height: 44px;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    line-height: 24px;
+    border: 2px solid #E6E6E6;
+    /*border-radius: 18px;*/
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding: 2px 2px;
+    padding-top: 4px;
+    background: #E6E6E6;
+    color: #03618A;
+    font-size: 0.8em;
+    letter-spacing: 0.1em;
+    line-height: 16px;
+}
+
+#info-collection {
+    word-wrap: break-word;
+    height: 32px;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+
+}
+
+#info-collection > p {
+    margin-top: 6px;
+    line-height: 16px;
+    font-size: 0.8em;
+    letter-spacing: 0.1em;
+}
+
+.info-label, .info-value {
+    float: left;
+    width: 50%;
+    max-width: 50%
+}
+
+
+/* Gradient color1 - color2 - color1 */
+hr.style-one {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #fff, #333, #fff);
+    width: 200px;
+}
+
+/* Gradient transparent - color - transparent */
+hr.style-two {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    width: 256px;
+}
+
+/*#menu {
     color: #F8FDFF;
     background-color: #03618A;
     text-align: center;
@@ -41,22 +198,7 @@ body, .container-fluid {
 
 }
 
-.fa {
-    /*font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;*/
-    line-height: 25px;
-    vertical-align: middle;
-    /*font-weight: bold;*/
-}
 
-#filterButtons {
-    height: 25px;
-}
-
-#filterButtons > a {
-    line-height: 25px;
-    margin-top: 10px;
-    width: 100%;
-}
 
 .information, .filters {
     margin-top: 25px;
@@ -76,5 +218,6 @@ body, .container-fluid {
     letter-spacing: 0.1em;
     font-size: 1.3em;
     vertical-align: middle;
-}
+}*/
 
+/*font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;*/

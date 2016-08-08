@@ -3,26 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <meta http-equiv="cleartype" content="on">
+  <meta name="MobileOptimized" content="320">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
   <!-- <link rel="stylesheet" href="dev/css/styles.css"> -->
-  <link rel="stylesheet" href="../dev/css/specialTest.css">
+  <link rel="stylesheet" href="../dev/css/reset.css">
+  <link rel="stylesheet" href="test.css">
+  <link rel="stylesheet" href="../node_modules/slideout/index.css">
   <title>T-MAP</title>
 </head>
 <body>
-  <div class="container">
-      <div class="row">
-        <div class="col-md-3">
-         
-          <div class="onoffswitch">
-            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
-            <label class="onoffswitch-label" for="myonoffswitch"></label>
-          </div> <!-- onoffswitch -->
+  <div class="flex-container">
+    <div class="app-panel" id="menu-panel">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi sunt explicabo aliquid, hic ipsum? Nesciunt sed consequatur velit cumque laboriosam quia elige Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel nisi deleniti omnis iusto nostrum tempora, adipisci natus molestias provident sapiente quas laborum. Dicta, assumenda facilis molestiae ut expedita delectus reprehenderit, mollitia nesciunt iure q
+    </div> <!-- menu-panel -->
 
-        </div> <!-- col-md-3 -->
-      </div> <!-- row -->
-  </div> <!-- container -->
+    <div class="app-panel" id="map-panel">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi sunt explicabo aliquid, hic ipsum? Nesciunt sed consequatur velit cumque laboriosam quia elige Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel nisi deleniti omnis iusto nostrum tempora, adipisci natus molestias provident sapiente quas laborum. Dicta, assumenda facilis molestiae ut expedita delectus reprehenderit, mollitia nesciunt iure quae minima laudantium temporibus, nam tempore, laborum accusamus libero quibusdam ducimus asperiores. Veniam, fugiat iure necessitatibus obcaecati? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque quod, sunt consectetur laboriosam tempora repellat dolores quae, sa
+      </p>
+    </div> <!-- menu-panel -->
+
+      <div id="map-cover">
+        <button class="toggle-button">☰</button>
+      </div>
+  </div> <!-- flex-container -->
 
 
+<script src="../node_modules/slideout/dist/slideout.min.js"></script>
 
+<script>
+  var slideout = new Slideout({
+    'panel': document.getElementById('map-panel'),
+    'menu': document.getElementById('menu-panel'),
+    'padding': 256,
+    'tolerance': 70
+  });
+
+  // Toggle button
+  document.querySelector('.toggle-button').addEventListener('click', function() {
+    slideout.toggle();
+  });
+</script>
+
+<script src="../dev/js/jquery-3.1.0.min.js"></script>
 </body>
+</html>

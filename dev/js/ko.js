@@ -5,7 +5,7 @@ function AppViewModel() {
         self.data = prepareData(data);
         //self.data = data;
         mapModel.init(self.data); //add but don't show locations to map
-
+        $('#filter-all').toggleClass("sButton-active");
         console.log( "Load was performed." );
     }).fail(function (jqxhr, status, error) { 
         console.log('error', status, error) }
@@ -26,7 +26,7 @@ function AppViewModel() {
                 "facilityType": location.type,
                 "disabled": location.type.toLowerCase() == "handicap",
                 "free": location.Betaling.toLowerCase() == "nej",
-                "manned": location.Bemanding.toLowerCase() == "ja",
+                "staffed": location.Bemanding.toLowerCase() == "ja",
                 "hazDisposal": location.Kanylebeholder.toLowerCase() == "ja",
                 "changingTable": location.Puslebord.toLowerCase() == "ja",
                 "drinkingWater": location.Vandhane.toLowerCase() == "ja",
@@ -44,28 +44,69 @@ function AppViewModel() {
     // Store the marker-id when the user clicks on one
     self.currentMarkerID = ko.observable();
 
-    filterUpdate = function(filterButton) {
-        var currentState = filterButton.state;
-        // Toggle button state
+    self.filterUpdate = function(filterButton) {
+        // REFACTOR THIS MESS
+        // note that filterButton.state represents its state BEFORE it was clicked.
+        console.log(filterButton);
+        // don't do anything if the All button is pressed when it's already active
+        if (filterButton.title == "all" && filterButton.state) return;
+
+        // Toggle button state for the clicked filterButton
+        if (filterButton.title == "all") {
+            $.each(appvm.buttons(), function(idx, button) {
+                if (button.title == "all") {
+                    appvm.buttons()[idx].state = true;
+                    $('#' + button.idb).toggleClass("sButton-active");
+                } else {
+                    appvm.buttons()[idx].state = false;
+                    $('#' + button.idb).removeClass("sButton-active");
+                }
+            });
+        }
+
+        if (filterButton.title != "all") {
+            $.each(appvm.buttons(), function(idx, button) {
+                if (button.title == "all") {
+                    appvm.buttons()[idx].state = false;
+                    $('#' + button.idb).removeClass("sButton-active");
+                } else {
+                    if (button.title == filterButton.title) {
+                        appvm.buttons()[idx].state = !filterButton.state;
+                        $('#' + button.idb).toggleClass("sButton-active");
+                    }
+                }
+            });
+        }
+
+        // if all filters are off then set the filter-all button to true
+        var anyOn = false;
         $.each(appvm.buttons(), function(idx, button) {
-            if (button.title == filterButton.title) {
-                appvm.buttons()[idx].state = !currentState;
-            }
+            if (button.state) anyOn = true;
         });
-        
-        // Set button class
-        $(".btn:contains('" + filterButton.title + "')")
-        .toggleClass("btn-default btn-success");
-        // Signal filter-change to mapModel
+
+        if (!anyOn) {
+            $.each(appvm.buttons(), function(idx, button) {
+                if (button.title == "all") {
+                    appvm.buttons()[idx].state = true;
+                    $('#' + appvm.buttons()[idx].idb).toggleClass("sButton-active");
+                } 
+            });
+        }
+
+        // // Signal filter-change to mapModel
         mapModel.setMarkerState(appvm.buttons());
     }
 
-    self.buttons = ko.observableArray([
-        {"title": "Free", "state": false, "icon": "fa fa-wheelchair"},
-        {"title": "Disabled", "state": false, "icon": "fa fa-wheelchair"},
-        {"title": "Manned", "state": false, "icon": "fa fa-wheelchair"}]);
+    var buttonHTML = '<i class="fa *icon* fa-fw fa-lg pull-left" aria-hidden="true"></i>';
 
-    self.locationInfo = ko.observableArray([]);
+    self.buttons = ko.observableArray([
+        {"title": "all", "idb": "filter-all", "state": true, "htmls": buttonHTML.replace('*icon*', 'fa-home').concat("All")},
+        {"title": "free", "idb": "filter-free", "state": false, "htmls": buttonHTML.replace('*icon*', 'fa-usd').concat("Free")},
+        {"title": "disabled", "idb": "filter-disabled", "state": false, "htmls": buttonHTML.replace('*icon*', 'fa-wheelchair').concat("Accessible")},
+        {"title": "staffed", "idb": "filter-staffed", "state": false, "htmls": buttonHTML.replace('*icon*', 'fa-user').concat("Staffed")}
+        ]);
+
+    self.locationInfo = ko.observableArray();
     self.infoTitle = ko.observable();
 
     // the infoLine array holds location details to be displayed
@@ -78,23 +119,23 @@ function AppViewModel() {
         // Then add items from the data-object
         var info = [
             {"label": "Free", "value": details.free},
-            {"label": "Disabled", "value": details.disabled},
-            {"label": "Manned", "value": details.manned}];
+            {"label": "Accesible", "value": details.disabled},
+            {"label": "Staffed", "value": details.staffed}];
 
         $.each(info, function(idx, object) {
             appvm.locationInfo.push(object);
         });
         appvm.infoTitle(details.place);
-        $('#info-panel').show();
+        $('#info-box').show();
     });      
     
 
 
 
-    self.showMorsel = function () {
-        console.log(appvm.currentMarkerID());
-        console.log(appvm.data[appvm.currentMarkerID()]);
-    }
+    // self.showMorsel = function () {
+    //     console.log(appvm.currentMarkerID());
+    //     console.log(appvm.data[appvm.currentMarkerID()]);
+    // }
 
     // self.data.forEach(function(d) {
     //     self.infoLine.push(d);

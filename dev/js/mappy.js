@@ -19,7 +19,7 @@ var mapModel = {
         self.setMarkerState();
     },
 
-    setMarkerState : function(filterButtons) {
+    setMarkerState: function(filterButtons) {
         var markersToUpdate = []; // hold the markes we're going to update
         //console.log(filterButtons);
         // check each location against each filter and set appropriate display status.
@@ -28,10 +28,12 @@ var mapModel = {
             var marker = self.markers[markerIdx];
             var markerShouldDisplay = true;
             $.each(filterButtons, function(btnIdx, button) {
-                var amenity = button['title'].toLowerCase();
+                var amenity = button['title'];
                 var required = button['state'];
        
                 if (required && !location[amenity]) markerShouldDisplay = false;
+                if (amenity == 'all' && required) markerShouldDisplay = true;
+                
             });
             
             if (markerShouldDisplay && !marker.displayStatus) {

@@ -3,47 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="cleartype" content="on">
+  <meta name="MobileOptimized" content="320">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="dev/css/reset.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="node_modules/slideout/index.css">
   <link rel="stylesheet" href="dev/css/styles.css">
   <link rel="stylesheet" href="dev/css/buttons.css">
-  <!-- <link rel="stylesheet" href="node_modules/slideout/css/index.css"> -->
   <title>T-MAP</title>
 </head>
 <body>
-  <div class="app-panel" id="menu-panel">
-    <h1>Menu</h1>
+    <div class="app-panel" id="menu-panel">
+      <div id="app-header">
+        <h1>Toilet Finder</h1>
+        <hr class="style-two">
+      </div> <!-- app header -->
 
-    <div id="filterButtons">
-      <a href="#" class="customButton">
-        <i class="fa fa-home fa-fw fa-lg pull-left" aria-hidden="true"></i>All
-      </a>
-      
-      <a href="#" class="customButton">
-        <i class="fa fa-wheelchair fa-fw fa-lg pull-left" aria-hidden="true"></i>Disabled access
-      </a>
-    </div>
-
-    <div id="info-panel">
-      <div class="panel-heading">
-        <h4 class="panel-title" data-bind="text: infoTitle">Noget</h4>
+      <div id="filter-header">
+        <h4>Show me</h4>
       </div>
 
-      <div class="panel-body" data-bind="foreach: locationInfo">
-        <p data-bind="text: label + ': ' + value"></p>
-      </div>
+      <div data-bind="foreach: buttons">
+        <div id="filterButtons" class="flex-container">
+          <a href="#" class="sButton" data-bind="html: htmls, attr: {id: idb}, click: $parent.filterUpdate"></a>
+        </div> <!-- filter-buttons -->
+      </div> <!-- foreach wrapper -->
+
+      <hr class="style-two">
+
+      <div id="info-box">
+        <div id="info-header">
+          <p data-bind="text: infoTitle">Noget</p>
+          <!-- <h4 class="panel-title" data-bind="text: infoTitle">Noget</h4> -->
+        </div>
+        <div id="info-collection" data-bind="foreach: locationInfo">
+          <p class="info-label" data-bind="text: label"></p>
+          <p class="info-value" data-bind="text: value"></p>
+        </div>
+      </div> <!-- info-box -->
+
+    </div> <!-- menu-panel -->
+    <div class="app-panel full-screen" id="map-panel">
+    </div> <!-- map-panel -->
+
+    <div id="map-cover">
+      <button class="toggle-button">☰</button>
     </div>
 
-  <div class="app-panel" id="map-panel">
     
-  </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="node_modules/slideout/dist/slideout.min.js"></script>
+    <script src="dev/js/slide.js"></script>
+    <script src="dev/js/setup.js"></script>  
+    
 
 
 
 
 
+<!-- 
+        <a href="#" class="filterButton" id="filter-free"  data-bind="click: filterUpdate">
+          <i class="fa fa-user fa-fw fa-lg pull-left" aria-hidden="true"></i>Free
+        </a>
+        
+        <a href="#" class="filterButton" id="filter-disabled" data-bind="click: filterUpdate">
+          <i class="fa fa-wheelchair fa-fw fa-lg pull-left" aria-hidden="true"></i>Accessible
+        </a>
 
-
+        <a href="#" class="filterButton" id="filter-staffed"  data-bind="click: filterUpdate">
+          <i class="fa fa-user fa-fw fa-lg pull-left" aria-hidden="true"></i>Staffed
+        </a> -->
 
 
 
@@ -60,112 +95,106 @@
           center: {lat: 55.6761, lng: 12.5683},
           zoom: 13,
           styles: [
-    {
-      "featureType": "administrative",
-      "elementType": "labels.text.fill",
-      "stylers": [
         {
-          "color": "#444444"
-        }
-      ]
-    },
-    {
-      "featureType": "landscape",
-      "elementType": "all",
-      "stylers": [
-        {
-          "color": "#f2f2f2"
-        }
-      ]
-    },
-    // {
-    //   "featureType": "poi",
-    //   "elementType": "all",
-    //   "stylers": [
-    //     {
-    //       "visibility": "off"
-    //     }
-    //   ]
-    // },
-      {
-      "featureType": "poi",
-      "elementType": "all",
-      "stylers": [
-                  {
-                      "hue": "#00FF6A"
-                  },
-                  {
-                      "saturation": -1.0989010989011234
-                  },
-                  {
-                      "lightness": 56.200000000000017
-                  },
-                  {
-                      "gamma": 1
-                  }
-              ]
-    },
-    {
-      "featureType": "road",
-      "elementType": "all",
-      "stylers": [
-        {
-          "saturation": -100
+          "featureType": "administrative",
+          "elementType": "labels.text.fill",
+          "stylers": [
+            {
+              "color": "#444444"
+            }
+          ]
         },
         {
-          "lightness": 45
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway",
-      "elementType": "all",
-      "stylers": [
-        {
-          "visibility": "simplified"
-        }
-      ]
-    },
-    {
-      "featureType": "road.arterial",
-      "elementType": "labels.icon",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "featureType": "transit",
-      "elementType": "all",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "featureType": "water",
-      "elementType": "all",
-      "stylers": [
-        {
-          "color": "#46bcec"
+          "featureType": "landscape",
+          "elementType": "all",
+          "stylers": [
+            {
+              "color": "#f2f2f2"
+            }
+          ]
+        },
+          {
+          "featureType": "poi",
+          "elementType": "all",
+          "stylers": [
+                      {
+                          "hue": "#00FF6A"
+                      },
+                      {
+                          "saturation": -1.0989010989011234
+                      },
+                      {
+                          "lightness": 56.200000000000017
+                      },
+                      {
+                          "gamma": 1
+                      }
+                  ]
         },
         {
-          "visibility": "on"
+          "featureType": "road",
+          "elementType": "all",
+          "stylers": [
+            {
+              "saturation": -100
+            },
+            {
+              "lightness": 45
+            }
+          ]
+        },
+        {
+          "featureType": "road.highway",
+          "elementType": "all",
+          "stylers": [
+            {
+              "visibility": "simplified"
+            }
+          ]
+        },
+        {
+          "featureType": "road.arterial",
+          "elementType": "labels.icon",
+          "stylers": [
+            {
+              "visibility": "off"
+            }
+          ]
+        },
+        {
+          "featureType": "transit",
+          "elementType": "all",
+          "stylers": [
+            {
+              "visibility": "off"
+            }
+          ]
+        },
+        {
+          "featureType": "water",
+          "elementType": "all",
+          "stylers": [
+            {
+              "color": "#46bcec"
+            },
+            {
+              "visibility": "on"
+            }
+          ]
         }
       ]
-    }
-  ]
         });
       }
     </script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    
 
+  
     <script 
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqQCJP3bsnODpjLx0dPilCEvstm20w7uY&v=3&callback=initMap">
     </script>
+
+
     <script defer src="dev/js/mappy.js"></script>
     <script defer src="dev/js/knockout.js"></script>
     <script defer src="dev/js/ko.js"></script>
