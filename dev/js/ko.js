@@ -2,8 +2,12 @@ function AppViewModel() {
     self = this;
     var sportsRecGeoJSON = 'http://data.dhs.opendata.arcgis.com/datasets/5f96a56cf8024d24b825b6aad94031e4_0.geojson';
     var sportsRecGeoJSONlocal = '/dev/data/SportandRec.geojson';
-    $.getJSON(sportsRecGeoJSON, function(data) {
+    $.getJSON(sportsRecGeoJSONlocal, function(data) {
         self.data = prepareData(data.features);
+        var sportOptions = self.sportEntries.filter(onlyUnique).sort();
+        $.each(sportOptions, function(idx, sport) {
+            self.availableSports.push(sport);
+        });
         mapModel.init(self.data); //add but don't show locations to map
         console.log( "Load was performed." );
     }).fail(function (jqxhr, status, error) { 
@@ -11,6 +15,7 @@ function AppViewModel() {
         console.log('error', status, error) }
     );
 
+    self.sportEntries = [];
     prepareData = function(data) {
         // format and prepare data for consumption
         var cleanData = []; // variable to be returned
@@ -25,20 +30,21 @@ function AppViewModel() {
                 "latitude": d.geometry.coordinates[1],
                 "longitude": d.geometry.coordinates[0],
                 "condition": formatCondition(d.properties.FacilityCondition, conditionAboveStr),
-                "sports": toTitleCase(d.properties.SportsPlayed),
+                "sport": toTitleCase(d.properties.SportsPlayed),
                 "surface": toTitleCase(d.properties.FieldSurfaceType),
                 "name": toTitleCase(d.properties.FacilityName),
                 "town": toTitleCase(d.properties.SuburbTown),
                 "changerooms": toTitleCase(d.properties.Changerooms)
             };
-            readyData.push(locInfo);
+            cleanData.push(locInfo);
+            self.sportEntries.push(String(locInfo.sport));
         });
         return(cleanData);
     }
 
     // Store the marker-id when the user clicks on one
-    self.currentMarkerID = ko.observable();
     self.availableSports = ko.observableArray();
+    self.currentMarkerID = ko.observable();
     self.locationInfo = ko.observableArray();
     self.infoTitle = ko.observable();
 
@@ -81,4 +87,8 @@ function formatCondition(str, aboveStr) {
     } else {
         return $.trim(toTitleCase(str.slice(4, 14)));
     }
+}
+
+function onlyUnique(value, index, self) { 
+    return self.indexOf(value) === index;
 }

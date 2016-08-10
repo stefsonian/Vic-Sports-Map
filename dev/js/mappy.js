@@ -4,8 +4,8 @@ var mapModel = {
         self.data = data;
         self.markers = [];
         mapView.init();
-        mapView.addLocationsToMap(data);
-        mapView.renderListings(self.markers, true);
+        //mapView.addLocationsToMap(data);
+        // mapView.renderListings(self.markers, true);
     },
 
     toggleAmenityState: function(amenity) {
