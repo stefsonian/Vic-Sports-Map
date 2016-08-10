@@ -62,22 +62,26 @@ var mapView = {
             
             var pos = {"lat": locations[i].latitude, "lng": locations[i].longitude};
             var position = pos;
-            var title = locations[i].place;
+            
             // Create a marker per location, and put into markers array.
             var marker = new google.maps.Marker({
                 position: position,
                 //icon: icons.free,
                 //icon: 'https://chart.googleapis.com/chart?chst=d_bubble_icon_text_small&chld=ski|bb|Wheeee!|FFFFFF|000000',
-                title: title,
+                title: locations[i].place,
+                locFree: locations[i].free,
+                locDisabled: locations[i].disabled,
+                locStaffed: locations[i].staffed,
                 animation: google.maps.Animation.DROP,
                 id: i,
-                displayStatus: true // used in the render function toggle show or not show.
+                displayStatus: true // used in the render function toggle show or not show marker.
             });
             // Create an onclick event to open an infowindow at each marker.
             marker.addListener('click', function () {
-                mapView.populateInfoWindow(this, largeInfowindow);
-                //$('#marker-id').text(String(this.id)).trigger('change');
                 appvm.currentMarkerID(this.id);
+                if ($(window).width() <= 700) {
+                    mapView.populateInfoWindow(this, largeInfowindow);
+                }
             });
 
             // Push the marker to the array of markers and set to active.
@@ -93,7 +97,12 @@ var mapView = {
         // First check to make sure the infowindow is not already opened on this marker.
         if (infowindow.marker != marker) {
             infowindow.marker = marker;
-            infowindow.setContent('<div class="mapMarkerTitle">' + marker.title + '</div>');
+            infowindow.setContent(
+                '<div class="map-marker-title">' + marker.title + '</div>' + 
+                '<div class="map-marker-text">Free: ' + marker.locFree + '</div>' + 
+                '<div class="map-marker-text">Accessible: ' + marker.locDisabled + '</div>' + 
+                '<div class="map-marker-text">Staffed: ' + marker.locStaffed + '</div>'
+                );
             infowindow.open(map, marker);
             // Make sure the marker property is cleared if the infowindow is closed.
             infowindow.addListener('closeclick', function () {
@@ -102,7 +111,8 @@ var mapView = {
         }
     },
 
-    renderListings: function(markers, fitBounds=false) {
+    renderListings: function(markers, fitBounds) {
+        if (typeof(fitBounds)==='undefined') fitBounds = false;
         // This function will loop through the markers array and display them all.
         var bounds = new google.maps.LatLngBounds();
         // Extend the boundaries of the map for each marker and display the marker

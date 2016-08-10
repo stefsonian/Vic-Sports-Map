@@ -1,113 +1,49 @@
 function AppViewModel() {
     self = this;
-    //Load data from local file
-    $.getJSON( "dev/data/kbh_pretty.json", function( data ) {
-        self.data = prepareData(data);
-        //self.data = data;
+    var sportsRecGeoJSON = 'http://data.dhs.opendata.arcgis.com/datasets/5f96a56cf8024d24b825b6aad94031e4_0.geojson';
+    var sportsRecGeoJSONlocal = '/dev/data/SportandRec.geojson';
+    $.getJSON(sportsRecGeoJSON, function(data) {
+        self.data = prepareData(data.features);
         mapModel.init(self.data); //add but don't show locations to map
-        $('#filter-all').toggleClass("sButton-active");
         console.log( "Load was performed." );
     }).fail(function (jqxhr, status, error) { 
+        // TRY LOCAL VERSION
         console.log('error', status, error) }
     );
 
     prepareData = function(data) {
         // format and prepare data for consumption
-        var readyData = []; // variable to be returned
+        var cleanData = []; // variable to be returned
+
         // cycle through each location object and perform formatting
-        $.each(data, function(idx, location) {
+        $.each(data, function(idx, d) {
+            var conditionAboveStr = 'empty';
+            if (idx > 0) {
+                conditionAboveStr = data[idx - 1].properties.FacilityCondition;
+            }
             var locInfo = {
-                "locationID": location.nid,
-                "place": location.Street,
-                "postalcode": location.Postalcode,
-                "city": location.City,
-                "latitude": location.Latitude,
-                "longitude": location.Longitude,
-                "facilityType": location.type,
-                "disabled": location.type.toLowerCase() == "handicap",
-                "free": location.Betaling.toLowerCase() == "nej",
-                "staffed": location.Bemanding.toLowerCase() == "ja",
-                "hazDisposal": location.Kanylebeholder.toLowerCase() == "ja",
-                "changingTable": location.Puslebord.toLowerCase() == "ja",
-                "drinkingWater": location.Vandhane.toLowerCase() == "ja",
-                "additionalInfo": location.Body,
-                "region": location.Term,
-                "photos": location.Billeder
+                "latitude": d.geometry.coordinates[1],
+                "longitude": d.geometry.coordinates[0],
+                "condition": formatCondition(d.properties.FacilityCondition, conditionAboveStr),
+                "sports": toTitleCase(d.properties.SportsPlayed),
+                "surface": toTitleCase(d.properties.FieldSurfaceType),
+                "name": toTitleCase(d.properties.FacilityName),
+                "town": toTitleCase(d.properties.SuburbTown),
+                "changerooms": toTitleCase(d.properties.Changerooms)
             };
             readyData.push(locInfo);
         });
-        return(readyData);
+        return(cleanData);
     }
-
-
 
     // Store the marker-id when the user clicks on one
     self.currentMarkerID = ko.observable();
-
-    self.filterUpdate = function(filterButton) {
-        // REFACTOR THIS MESS
-        // note that filterButton.state represents its state BEFORE it was clicked.
-        console.log(filterButton);
-        // don't do anything if the All button is pressed when it's already active
-        if (filterButton.title == "all" && filterButton.state) return;
-
-        // Toggle button state for the clicked filterButton
-        if (filterButton.title == "all") {
-            $.each(appvm.buttons(), function(idx, button) {
-                if (button.title == "all") {
-                    appvm.buttons()[idx].state = true;
-                    $('#' + button.idb).toggleClass("sButton-active");
-                } else {
-                    appvm.buttons()[idx].state = false;
-                    $('#' + button.idb).removeClass("sButton-active");
-                }
-            });
-        }
-
-        if (filterButton.title != "all") {
-            $.each(appvm.buttons(), function(idx, button) {
-                if (button.title == "all") {
-                    appvm.buttons()[idx].state = false;
-                    $('#' + button.idb).removeClass("sButton-active");
-                } else {
-                    if (button.title == filterButton.title) {
-                        appvm.buttons()[idx].state = !filterButton.state;
-                        $('#' + button.idb).toggleClass("sButton-active");
-                    }
-                }
-            });
-        }
-
-        // if all filters are off then set the filter-all button to true
-        var anyOn = false;
-        $.each(appvm.buttons(), function(idx, button) {
-            if (button.state) anyOn = true;
-        });
-
-        if (!anyOn) {
-            $.each(appvm.buttons(), function(idx, button) {
-                if (button.title == "all") {
-                    appvm.buttons()[idx].state = true;
-                    $('#' + appvm.buttons()[idx].idb).toggleClass("sButton-active");
-                } 
-            });
-        }
-
-        // // Signal filter-change to mapModel
-        mapModel.setMarkerState(appvm.buttons());
-    }
-
-    var buttonHTML = '<i class="fa *icon* fa-fw fa-lg pull-left" aria-hidden="true"></i>';
-
-    self.buttons = ko.observableArray([
-        {"title": "all", "idb": "filter-all", "state": true, "htmls": buttonHTML.replace('*icon*', 'fa-home').concat("All")},
-        {"title": "free", "idb": "filter-free", "state": false, "htmls": buttonHTML.replace('*icon*', 'fa-usd').concat("Free")},
-        {"title": "disabled", "idb": "filter-disabled", "state": false, "htmls": buttonHTML.replace('*icon*', 'fa-wheelchair').concat("Accessible")},
-        {"title": "staffed", "idb": "filter-staffed", "state": false, "htmls": buttonHTML.replace('*icon*', 'fa-user').concat("Staffed")}
-        ]);
-
+    self.availableSports = ko.observableArray();
     self.locationInfo = ko.observableArray();
     self.infoTitle = ko.observable();
+
+    // get sports from data
+
 
     // the infoLine array holds location details to be displayed
     // in the side panel when the user clicks on a marker.
@@ -115,35 +51,34 @@ function AppViewModel() {
     self.currentMarkerID.subscribe(function(newValue) {
         // First clear the array
         appvm.locationInfo.removeAll();
-        var details = appvm.data[newValue];
         // Then add items from the data-object
-        var info = [
-            {"label": "Free", "value": details.free},
-            {"label": "Accesible", "value": details.disabled},
-            {"label": "Staffed", "value": details.staffed}];
+        var details = appvm.data[newValue];
 
-        $.each(info, function(idx, object) {
-            appvm.locationInfo.push(object);
+        $.each(details, function(key, value) {
+            if (key != "title") {
+                appvm.locationInfo.push({"label": key.toUpperCase(), "value": value});
+            }
         });
-        appvm.infoTitle(details.place);
+
+        // set the infoTitle and reveal the info-box
+        appvm.infoTitle(details.title);
         $('#info-box').show();
     });      
-    
-
-
-
-    // self.showMorsel = function () {
-    //     console.log(appvm.currentMarkerID());
-    //     console.log(appvm.data[appvm.currentMarkerID()]);
-    // }
-
-    // self.data.forEach(function(d) {
-    //     self.infoLine.push(d);
-    // });
-    
-
-
 }
 
 appvm = new AppViewModel();
 ko.applyBindings(appvm);  
+
+// Convert to title case
+function toTitleCase(str) {
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
+// Format facility condition string
+function formatCondition(str, aboveStr) {
+    if ($.trim(str.toLowerCase()) == 'same as above') {
+        return $.trim(toTitleCase(aboveStr.slice(4, 14)));
+    } else {
+        return $.trim(toTitleCase(str.slice(4, 14)));
+    }
+}

@@ -14,12 +14,12 @@
   <link rel="stylesheet" href="node_modules/slideout/index.css">
   <link rel="stylesheet" href="dev/css/styles.css">
   <link rel="stylesheet" href="dev/css/buttons.css">
-  <title>T-MAP</title>
+  <title>Victoria Sports</title>
 </head>
 <body>
     <div class="app-panel" id="menu-panel">
       <div id="app-header">
-        <h1>Toilet Finder</h1>
+        <h1>Vic Sports</h1>
         <hr class="style-two">
       </div> <!-- app header -->
 
@@ -27,9 +27,10 @@
         <h4>Show me</h4>
       </div>
 
-      <div data-bind="foreach: buttons">
-        <div id="filterButtons" class="flex-container">
-          <a href="#" class="sButton" data-bind="html: htmls, attr: {id: idb}, click: $parent.filterUpdate"></a>
+      <div>
+        <div>
+          <select data-bind="options: availableSports"></select>
+<!--           <a href="#" class="sButton" data-bind="html: htmls, attr: {id: idb}, click: $parent.filterUpdate"></a> -->
         </div> <!-- filter-buttons -->
       </div> <!-- foreach wrapper -->
 
@@ -67,20 +68,6 @@
 
 
 
-<!-- 
-        <a href="#" class="filterButton" id="filter-free"  data-bind="click: filterUpdate">
-          <i class="fa fa-user fa-fw fa-lg pull-left" aria-hidden="true"></i>Free
-        </a>
-        
-        <a href="#" class="filterButton" id="filter-disabled" data-bind="click: filterUpdate">
-          <i class="fa fa-wheelchair fa-fw fa-lg pull-left" aria-hidden="true"></i>Accessible
-        </a>
-
-        <a href="#" class="filterButton" id="filter-staffed"  data-bind="click: filterUpdate">
-          <i class="fa fa-user fa-fw fa-lg pull-left" aria-hidden="true"></i>Staffed
-        </a> -->
-
-
 
 
 
@@ -92,8 +79,8 @@
       function initMap() {
         // Constructor creates a new map - only center and zoom are required.
         map = new google.maps.Map(document.getElementById('map-panel'), {
-          center: {lat: 55.6761, lng: 12.5683},
-          zoom: 13,
+          center: {lat: -37.811957, lng: 144.962860}, 
+          zoom: 11,
           styles: [
         {
           "featureType": "administrative",

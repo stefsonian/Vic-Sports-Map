@@ -175,6 +175,15 @@ hr.style-two {
     width: 256px;
 }
 
+.map-marker-text, .map-marker-title {
+    color: black;
+    font-size: 14;
+}
+
+.map-marker-title {
+    font-weight: 700;
+}
+
 /*#menu {
     color: #F8FDFF;
     background-color: #03618A;
