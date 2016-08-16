@@ -15,32 +15,37 @@
   <link rel="stylesheet" href="dev/css/styles.css">
   <link rel="stylesheet" href="dev/css/buttons.css">
   <link rel="stylesheet" href="dev/css/dropdown.css">
-  <title>Victoria Sports</title>
+  <title>Victoria Sports Venue Map</title>
 </head>
 <body>
     <div class="app-panel" id="menu-panel">
       <div id="app-header">
-        <h1>Vic Sports</h1>
+        <h1>Victoria Sports Venue Map</h1>
         <hr class="style-two">
       </div> <!-- app header -->
 
       <div id="filter-header">
-        <h4>Show me</h4>
+        <p>Find venues for your favourite sport</p>
+        <hr class="style-two">
       </div>
 
       <div>
+        <p class="select-description">Activity</p>
         <div class="select_style">
-          <select data-bind='options: availableSports, optionsCaption: "Select Activity"'></select>
-          <span></span>
-<!--           <a href="#" class="sButton" data-bind="html: htmls, attr: {id: idb}, click: $parent.filterUpdate"></a> -->
-        </div> <!-- filter-buttons -->
-      </div> <!-- foreach wrapper -->
+          <select data-bind='options: availableSports, value: sportSelected ,  optionsCaption: "Select Activity"'></select><span></span>     
+        </div> <!-- sports select -->
+
+        <p class="select-description">Minimum venue condition</p>
+        <div class="select_style">
+          <select data-bind='options: venueCondition, value: conditionSelected ,  optionsCaption: "Set minimum condition"'></select><span></span>     
+        </div> <!-- condition select -->
+      </div> 
 
       <hr class="style-two">
 
       <div id="info-box">
         <div id="info-header">
-          <p data-bind="text: infoTitle">Noget</p>
+          <p data-bind="text: infoTitle"></p>
           <!-- <h4 class="panel-title" data-bind="text: infoTitle">Noget</h4> -->
         </div>
         <div id="info-collection" data-bind="foreach: locationInfo">
@@ -81,8 +86,8 @@
       function initMap() {
         // Constructor creates a new map - only center and zoom are required.
         map = new google.maps.Map(document.getElementById('map-panel'), {
-          center: {lat: -37.811957, lng: 144.962860}, 
-          zoom: 11,
+          center: {lat: -37.811957, lng: 144.992860}, 
+          zoom: 12,
           styles: [
         {
           "featureType": "administrative",
@@ -175,8 +180,6 @@
         });
       }
     </script>
-
-    
 
   
     <script 

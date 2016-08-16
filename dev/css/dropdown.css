@@ -15,10 +15,8 @@
   /*font-family: "helvetica neue",arial;*/
   position: relative;
   cursor: pointer;
-  padding-right:20px;
-  margin-left: 20px;
-  margin-right: 20px;
-
+  padding-right: 0;
+  margin: 8px 20px;
 }
 .select_style span
 {
@@ -29,12 +27,13 @@
   background: url('/dev/images/arrow.png') no-repeat;
   top: 50%;
   margin-top: -4px;
+  pointer-events: none;
 }
 .select_style select
 {
   -webkit-appearance: none;
   appearance:none;
-  width:120%;
+  width:100%;
   background:none;
   background:transparent;
   border:none;

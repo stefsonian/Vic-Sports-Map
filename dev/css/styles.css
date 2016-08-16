@@ -90,14 +90,17 @@ h1 {
 
 #app-header, #filter-header, #info-box {
     margin-top: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     text-align: center;
-    font-size: 2.2em;
-    letter-spacing: 0.08em;
+    font-size: 1.5em;
+    letter-spacing: 0.06em;
 }
 
 #filter-header {
-    font-size: 1.4em;
+    font-size: 1em;
+    padding: 5px;
+    margin: 1px;
+    margin-bottom: 10px;
 }
 
 #info-box {
@@ -106,8 +109,8 @@ h1 {
     margin-top: 20;
     margin-left: auto;
     margin-right: auto;
-    width: 190px;
-    border: 2px solid #E6E6E6;
+    width: 216px;
+    border: 2px solid #FFF;
     background-color:transparent;
     color: #E6E6E6;
     border-radius: 18px;
@@ -122,13 +125,13 @@ h1 {
     margin-right: 0;
     width: 100%;
     line-height: 24px;
-    border: 2px solid #E6E6E6;
+    border: 2px solid #FFF;
     /*border-radius: 18px;*/
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     padding: 2px 2px;
     padding-top: 4px;
-    background: #E6E6E6;
+    background: #FFF;
     color: #03618A;
     font-size: 0.8em;
     letter-spacing: 0.1em;
@@ -145,16 +148,26 @@ h1 {
 }
 
 #info-collection > p {
-    margin-top: 6px;
+    margin-top: 12px;
     line-height: 16px;
-    font-size: 0.8em;
+    font-size: 0.62em;
     letter-spacing: 0.1em;
+    text-align: left;
+    color: #fff;
+}
+
+.info-label {
+    text-transform: lowercase;
+}
+
+.info-label:first-letter {
+    text-transform: uppercase;
 }
 
 .info-label, .info-value {
     float: left;
-    width: 50%;
-    max-width: 50%
+    width: 44%;
+    margin-left: 2%;
 }
 
 
@@ -184,6 +197,16 @@ hr.style-two {
     font-weight: 700;
 }
 
+.select-description {
+    font-weight: 700;
+    text-align: center;
+    padding-top: 8px;
+}
+
+.map-infowindow {
+    height: 36px;
+    line-height: 1.3em;
+}
 /*#menu {
     color: #F8FDFF;
     background-color: #03618A;

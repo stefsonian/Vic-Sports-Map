@@ -1,7 +1,5 @@
-console.log($(document).width())
-console.log($(window).width())
 
-if ($(window).width() > 700) {
+if ($(window).width() > 300) {
     $('.toggle-button').click();
 }
 
