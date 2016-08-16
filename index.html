@@ -9,24 +9,23 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-  <link rel="stylesheet" href="dev/css/reset.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="dist/css/reset.css">
   <link rel="stylesheet" href="node_modules/slideout/index.css">
-  <link rel="stylesheet" href="dev/css/styles.css">
-  <link rel="stylesheet" href="dev/css/buttons.css">
-  <link rel="stylesheet" href="dev/css/dropdown.css">
+  <link rel="stylesheet" href="dist/css/styles.css">
+  <link rel="stylesheet" href="dist/css/dropdown.css">
   <title>Victoria Sports Venue Map</title>
 </head>
 <body>
     <div class="app-panel" id="menu-panel">
       <div id="app-header">
         <h1>Victoria Sports Venue Map</h1>
-        <hr class="style-two">
+        <hr class="hr-style-two">
       </div> <!-- app header -->
 
       <div id="filter-header">
-        <p>Find venues for your favourite sport</p>
-        <hr class="style-two">
+        <p>Find venues for your</p>
+        <p>favourite sports</p>
+        <hr class="hr-style-two">
       </div>
 
       <div>
@@ -41,12 +40,12 @@
         </div> <!-- condition select -->
       </div> 
 
-      <hr class="style-two">
+      <hr class="hr-style-two">
 
-      <div id="info-box">
+      <div id="info-box" data-bind="visible: showLocationInfo">
         <div id="info-header">
           <p data-bind="text: infoTitle"></p>
-          <!-- <h4 class="panel-title" data-bind="text: infoTitle">Noget</h4> -->
+
         </div>
         <div id="info-collection" data-bind="foreach: locationInfo">
           <p class="info-label" data-bind="text: label"></p>
@@ -54,35 +53,31 @@
         </div>
       </div> <!-- info-box -->
 
+      <div id="attribution">
+        <p>This map is based on data obtained from</p>
+        <p><a href="https://www.data.vic.gov.au/" target="_blank">Victoria Open Data Directory</a></p>
+      </div>
+
     </div> <!-- menu-panel -->
     <div class="app-panel full-screen" id="map-panel">
+      <p>You need to be online to view the map.</p>
     </div> <!-- map-panel -->
 
     <div id="map-cover">
       <button class="toggle-button">☰</button>
     </div>
 
-    
+    <!-- #########Note: Scripts only beyond this point########## -->
 
-
+    <!-- Load initial scripts needed to setup the GUI and display the map -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="node_modules/slideout/dist/slideout.min.js"></script>
-    <script src="dev/js/slide.js"></script>
-    <script src="dev/js/setup.js"></script>  
+    <script src="dist/js/slide.js"></script>
+    <script src="dist/js/setup.js"></script>  
     
-
-
-
-
-
-
-
-
-
-
     <script>
-      var map;
-      console.log("i got to the mapping script");
+      var map; // This is the variable that holds the Google map
+
       function initMap() {
         // Constructor creates a new map - only center and zoom are required.
         map = new google.maps.Map(document.getElementById('map-panel'), {
@@ -187,8 +182,9 @@
     </script>
 
 
-    <script defer src="dev/js/mappy.js"></script>
-    <script defer src="dev/js/knockout.js"></script>
-    <script defer src="dev/js/ko.js"></script>
+    <!-- Load scripts needed for user intaction with the map and menu -->
+    <script defer src="dist/js/mappy.js"></script>
+    <script defer src="dist/js/knockout.js"></script>
+    <script defer src="dist/js/ko.js"></script>
 </body>
 </html>
