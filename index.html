@@ -73,7 +73,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="node_modules/slideout/dist/slideout.min.js"></script>
     <script src="dist/js/slide.js"></script>
-    <script src="dist/js/setup.js"></script>  
+  
     
     <script>
       var map; // This is the variable that holds the Google map
@@ -173,29 +173,12 @@
         }
       ]
         });
-      }
+    }
     </script>
 
     <!-- Load Google Maps and scripts needed for user intaction with the map and menu -->
     <script src="node_modules/knockout/build/output/knockout-latest.js"></script>
-    <script async defer>
-      $(function () {
-        $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCqQCJP3bsnODpjLx0dPilCEvstm20w7uY&v=3&callback=initMap", function () {
-
-          $.getScript("dist/js/mappy.js").fail(function(jqxhr, settings, exception) {
-            console.log('Failed to load script: mappy.js');
-          });
-
-          $.getScript("dist/js/ko.js").fail(function(jqxhr, settings, exception) {
-            console.log('Failed to load script: ko.js');
-          });
-
-        }).fail(function(jqxhr, settings, exception) {
-          console.log('Failed to load Google Map');
-        });
-
-      });
-    </script>
+    <script async src="dist/js/setup.js"></script>
 
 </body>
 </html>
