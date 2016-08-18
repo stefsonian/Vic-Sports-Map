@@ -24,7 +24,7 @@
   right: 10px;
   width: 8px;
   height: 8px;
-  background: url('/dev/images/arrow.png') no-repeat;
+  background: url('../images/arrow.png') no-repeat;
   top: 50%;
   margin-top: -4px;
   pointer-events: none;

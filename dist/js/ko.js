@@ -26,7 +26,8 @@ function AppViewModel() {
             console.log('Data loaded from local');
             init(data);
         }).fail(function (jqxhr, status, error) { 
-            console.log('Failed to load data from local file ', status, error);
+            console.log('Failed to load data from local file', status, error);
+            console.log('IMPORTANT: To load data from local you must mount the app on a web-server');
         });
     });
 
@@ -119,5 +120,5 @@ function AppViewModel() {
 }
 
 // ###Create the knockout.js view model and apply bindings###
-appvm = new AppViewModel();
+var appvm = new AppViewModel();
 ko.applyBindings(appvm);  

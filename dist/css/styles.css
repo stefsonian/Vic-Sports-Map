@@ -173,7 +173,7 @@ hr.hr-style-two {
 }
 
 .map-infowindow {
-    height: 36px;
+    height: 62px;
     line-height: 1.3em;
 }
 
@@ -181,6 +181,14 @@ hr.hr-style-two {
     font-size: 0.6em;
     text-align: center;
     margin-top: 15px;
+}
+
+#map-disclaimer {
+    position: absolute;
+    top: 200px;
+    width: 100%;
+    font-size: 2em;
+    text-align: center;
 }
 
 a:link, a:visited, a:active {

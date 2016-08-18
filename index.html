@@ -60,7 +60,7 @@
 
     </div> <!-- menu-panel -->
     <div class="app-panel full-screen" id="map-panel">
-      <p>You need to be online to view the map.</p>
+      <p id="map-disclaimer">You need to be online to view the map</p>
     </div> <!-- map-panel -->
 
     <div id="map-cover">
@@ -176,15 +176,26 @@
       }
     </script>
 
-  
-    <script 
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqQCJP3bsnODpjLx0dPilCEvstm20w7uY&v=3&callback=initMap">
+    <!-- Load Google Maps and scripts needed for user intaction with the map and menu -->
+    <script defer src="dist/js/knockout.js"></script>
+    <script async defer>
+      $(function () {
+        $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCqQCJP3bsnODpjLx0dPilCEvstm20w7uY&v=3&callback=initMap", function () {
+
+          $.getScript("dist/js/mappy.js").fail(function(jqxhr, settings, exception) {
+            console.log('Failed to load script: mappy.js');
+          });
+
+          $.getScript("dist/js/ko.js").fail(function(jqxhr, settings, exception) {
+            console.log('Failed to load script: ko.js');
+          });
+
+        }).fail(function(jqxhr, settings, exception) {
+          console.log('Failed to load Google Map');
+        });
+
+      });
     </script>
 
-
-    <!-- Load scripts needed for user intaction with the map and menu -->
-    <script defer src="dist/js/mappy.js"></script>
-    <script defer src="dist/js/knockout.js"></script>
-    <script defer src="dist/js/ko.js"></script>
 </body>
 </html>

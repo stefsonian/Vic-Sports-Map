@@ -11,8 +11,7 @@ document.querySelector('.toggle-button').addEventListener('click', function() {
   slideout.toggle();
   //set class to toggle map width from/to fullscreen
   //after small delay which allows the transformation animation to finish. 
-  var delayWidthChange;
-  slideout.isOpen() ? delayWidthChange = 350 : delayWidthChange = 0;
+  var delayWidthChange = slideout.isOpen() ? 350 : 0;
   setTimeout(function(){
     $('#map-panel').toggleClass("full-screen");
   }, delayWidthChange);
