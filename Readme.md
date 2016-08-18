@@ -10,6 +10,7 @@
 
 Note: **The app only works when mounted on a web-server.**
 An easy way to do this on most macs:
+
 1. In the terminal: Navigate to the app folder
 2. Enter: *python -m SimpleHTTPServer 8080*
 3. In your browser navigation bar enter: *localhost:8080*
