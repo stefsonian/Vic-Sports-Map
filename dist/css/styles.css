@@ -183,7 +183,7 @@ hr.hr-style-two {
     margin-top: 15px;
 }
 
-#map-disclaimer {
+.map-disclaimer {
     position: absolute;
     top: 200px;
     width: 100%;
@@ -191,9 +191,41 @@ hr.hr-style-two {
     text-align: center;
 }
 
+#locations-container {
+    width: 230px;
+    margin: auto;
+    height: 240px;
+    max-height: 240px;
+    border: 1px solid white;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+}
+
+#list-header {
+    text-align: center;
+    min-height: 1em;
+    margin-top: 2px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid white;
+}
+
+#location-list {
+    margin: 5px;
+    font-size: 0.7em;
+    letter-spacing: 0.03em;
+    max-height: 86%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+
+
+
+
 a:link, a:visited, a:active {
     color: #bad9ee;
 }
 
 a:hover {
     color: #F7584C;
+}

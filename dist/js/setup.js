@@ -10,14 +10,18 @@ $(function () {
 
     $.getScript("dist/js/mappy.js").fail(function(jqxhr, settings, exception) {
       console.log('Failed to load script: mappy.js');
+      alert('Failed to load script: mappy.js');
     });
 
     $.getScript("dist/js/ko.js").fail(function(jqxhr, settings, exception) {
       console.log('Failed to load script: ko.js');
+      alert('Failed to load script: ko.js');
+      alert('For this app to function, You must mount it on a web-server');
     });
 
   }).fail(function(jqxhr, settings, exception) {
-    console.log('Failed to load Google Map');
+    console.log('Failed to load Google Maps');
+    alert('Failed to load Google Maps');
   });
 
 });
@@ -32,6 +36,9 @@ function toTitleCase(str) {
 function formatCondition(str, aboveStr) {
     if ($.trim(aboveStr.toLowerCase()) == 'same as above') {
         aboveStr = "3. Average";
+    }
+    if (str.length < 2) {
+        str = "3. Average";
     }
 
     if ($.trim(str.toLowerCase()) == 'same as above') {    

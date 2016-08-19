@@ -1,16 +1,27 @@
 function AppViewModel() {
     // ###Declare variables and observables###
-    self = this;
+    var self = this;
     self.sportEntries = []; // sport string for each data-point
     self.conditionEntries = []; // venue condition string for each data-point
     self.availableSports = ko.observableArray(); // unique sports in data set
     self.venueCondition = ko.observableArray(); // unique venue conditions in data set
     self.currentMarkerID = ko.observable(); // the map-marker currently selected
     self.locationInfo = ko.observableArray(); // location details for each data-point
+    self.locationList = ko.observableArray(); // list of locations available for the chosen sport (ignore condition) 
+    self.qualifyingLocations = ko.observableArray(); // list of locations matching venue condition selection
     self.infoTitle = ko.observable(); // data-point title (venue name)
     self.sportSelected = ko.observable(); // the sport selected in the GUI selector
     self.conditionSelected = ko.observable(); // the venue condition selected in the GUI selector
     self.showLocationInfo = ko.observable(false); // whether to show the location details vignette
+
+    // compute numeric score of selected venue condition
+    self.numericCondition = ko.computed(function() {
+        if (self.conditionSelected()) {
+            return Number(self.conditionSelected().slice(0, 1));
+        } else {
+            return 1;
+        }
+    });
 
     // ###Load data from API. If this fails, then load data from local file###
     var sportsRecGeoJSON = 'http://data.dhs.opendata.arcgis.com/datasets/5f96a56cf8024d24b825b6aad94031e4_0.geojson';
@@ -20,7 +31,7 @@ function AppViewModel() {
         console.log('Data loaded from remote');
         init(data);
     }).fail(function (jqxhr, status, error) { 
-        console.log('Failed to load data from API ', status, error);
+        console.log('Failed to load data from API. Attempting to load local data... ', status, error);
         // If fail then use local version (local file is always available)
         $.getJSON(sportsRecGeoJSONlocal, function(data) {
             console.log('Data loaded from local');
@@ -28,6 +39,7 @@ function AppViewModel() {
         }).fail(function (jqxhr, status, error) { 
             console.log('Failed to load data from local file', status, error);
             console.log('IMPORTANT: To load data from local you must mount the app on a web-server');
+            alert("Failed to load data. To load data you must mount the app on a web-server");
         });
     });
 
@@ -40,13 +52,14 @@ function AppViewModel() {
         $.each(sportOptions, function(idx, sport) {
             self.availableSports.push(sport);
         });
+
         var conditionOptions = self.conditionEntries.filter(onlyUnique).sort();
         $.each(conditionOptions, function(idx, condition) {
             self.venueCondition.push(condition);
         });
-        self.sportSelected("Australian Rules Football");
-        self.conditionSelected("5. Very Good");
-    }
+        self.sportSelected("Surf Life Saving");
+        //self.conditionSelected("1. Very Poor");
+    };
 
     // ###format and prepare data for consumption###
     prepareData = function(data) {
@@ -74,27 +87,44 @@ function AppViewModel() {
             self.conditionEntries.push(String(locInfo.condition));
         });
         return(cleanData);
-    }
+    };
 
 
     // ###React to user interaction with the sport selector###
     self.sportSelected.subscribe(function(newValue) {
-        console.log(newValue);
         filteredData = appvm.data.filter(function (d) {
           return d.sport == newValue;
         });
         mapControl.setSelection(filteredData);
         mapControl.setMarkers();
         appvm.showLocationInfo(false);
+
+        // Reflect selection in locationList and qualifyingLocations
+        self.locationList.removeAll();
+        self.qualifyingLocations.removeAll();
+        $.each(filteredData, function (idx, loc) {
+            if (Number(loc.condition.slice(0, 1)) >= self.numericCondition()) {
+                self.qualifyingLocations.push(loc);
+            }
+            self.locationList.push(loc);
+        });
     });
 
     // ###React to user interaction with the venue condition selector###
     self.conditionSelected.subscribe(function(newValue) {
-        numVal = Number(newValue.slice(0, 1));
-        if (!numVal) numVal = 1; // if input is undefined, set numVal to lowest value (1).
+        var numVal = newValue ? Math.max(1, Number(newValue.slice(0, 1))) : 1;
+
         mapControl.setAcceptableCondition(numVal);
         mapControl.setMarkers();
         appvm.showLocationInfo(false);
+
+        // Reflect selection in qualifyingLocations
+        self.qualifyingLocations.removeAll();
+        $.each(self.locationList(), function(idx, loc) {
+            if (Number(loc.condition.slice(0, 1)) >= self.numericCondition()) {
+                self.qualifyingLocations.push(loc);
+            }
+        });
     });
 
     // ###React to user selection of marker on map###

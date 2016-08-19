@@ -42,6 +42,17 @@
 
       <hr class="hr-style-two">
 
+      <div id="locations-container">
+        <div id="list-header">
+          <p>Locations</p>
+        </div>
+
+        <ul id="location-list" data-bind="foreach: qualifyingLocations">
+          <li class="location-title" data-bind="text: name">Location Title</li>
+        </ul>
+      </div> <!-- locations-container -->
+
+<!-- 
       <div id="info-box" data-bind="visible: showLocationInfo">
         <div id="info-header">
           <p data-bind="text: infoTitle"></p>
@@ -51,8 +62,9 @@
           <p class="info-label" data-bind="text: label"></p>
           <p class="info-value" data-bind="text: value"></p>
         </div>
-      </div> <!-- info-box -->
+      </div> 
 
+ -->
       <div id="attribution">
         <p>This map is based on data obtained from</p>
         <p><a href="https://www.data.vic.gov.au/" target="_blank">Victoria Open Data Directory</a></p>
@@ -60,7 +72,7 @@
 
     </div> <!-- menu-panel -->
     <div class="app-panel full-screen" id="map-panel">
-      <p id="map-disclaimer">You need to be online to view the map</p>
+      <p class="map-disclaimer">Google Maps is now loading...<br>Note that you need to be online to view the map</p>
     </div> <!-- map-panel -->
 
     <div id="map-cover">
@@ -70,7 +82,7 @@
     <!-- #########Note: Scripts only beyond this point########## -->
 
     <!-- Load initial scripts needed to setup the GUI and display the map -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="dist/js/jquery-3.1.0.min.js"></script>
     <script src="node_modules/slideout/dist/slideout.min.js"></script>
     <script src="dist/js/slide.js"></script>
   

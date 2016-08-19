@@ -75,7 +75,7 @@ var mapControl = {
 
         // filter out venues that don't make the grade.
         selection = selection.filter(function (item) {
-            numVal = Math.max(1, Number(item.condition.slice(0, 1)))
+            numVal = Math.max(1, Number(item.condition.slice(0, 1)));
             return numVal >= Number(mapModel.acceptableCondition);
         });
 
@@ -95,7 +95,7 @@ var mapControl = {
             mapModel.markers[idx].icon = null;
             markersToRender.push(mapModel.markers[idx]);
         });
-        this.displayMarkers(markersToRender, false);
+        this.displayMarkers(markersToRender, true);
     },
 
     // Place markers on map
