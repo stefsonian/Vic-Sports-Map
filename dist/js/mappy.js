@@ -94,6 +94,11 @@ var mapControl = {
             mapModel.markers[idx].id = loc.locID;
             mapModel.markers[idx].icon = null;
             markersToRender.push(mapModel.markers[idx]);
+
+            // appvm.addMarkerToQualifyingLocations(idx, mapModel.markers[idx]);
+            // console.log(appvm.qualifyingLocations[idx] );
+            // add marker to the listView array
+            appvm.qualifyingLocations()[idx].marker = mapModel.markers[idx];
         });
         this.displayMarkers(markersToRender, true);
     },

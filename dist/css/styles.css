@@ -217,9 +217,13 @@ hr.hr-style-two {
     overflow-y: auto;
     overflow-x: hidden;
     white-space: nowrap;
+    cursor: default;
 }
 
-
+.location-title.is-selected {
+    color: yellow;
+    font-weight: 700;
+}
 
 
 a:link, a:visited, a:active {

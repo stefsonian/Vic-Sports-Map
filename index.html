@@ -48,7 +48,7 @@
         </div>
 
         <ul id="location-list" data-bind="foreach: qualifyingLocations">
-          <li class="location-title" data-bind="text: name">Location Title</li>
+          <li class="location-title" data-bind="text: name, css: {'is-selected' : selected}, click: listItemClicked">Location Title</li>
         </ul>
       </div> <!-- locations-container -->
 

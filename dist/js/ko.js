@@ -80,12 +80,15 @@ function AppViewModel() {
                 "surface": toTitleCase(d.properties.FieldSurfaceType),
                 "name": toTitleCase(d.properties.FacilityName),
                 "town": toTitleCase(d.properties.SuburbTown),
-                "changerooms": toTitleCase(d.properties.Changerooms)
+                "changerooms": toTitleCase(d.properties.Changerooms),
+                "marker": null,
+                "selected": ko.observable(false)
             };
             cleanData.push(locInfo);
             self.sportEntries.push(String(locInfo.sport));
             self.conditionEntries.push(String(locInfo.condition));
         });
+        cleanData.sort(function (left, right) { return left.name == right.name ? 0 : (left.name < right.name ? -1 : 1) });
         return(cleanData);
     };
 
@@ -95,9 +98,6 @@ function AppViewModel() {
         filteredData = appvm.data.filter(function (d) {
           return d.sport == newValue;
         });
-        mapControl.setSelection(filteredData);
-        mapControl.setMarkers();
-        appvm.showLocationInfo(false);
 
         // Reflect selection in locationList and qualifyingLocations
         self.locationList.removeAll();
@@ -108,15 +108,16 @@ function AppViewModel() {
             }
             self.locationList.push(loc);
         });
+
+        mapControl.setSelection(filteredData);
+        mapControl.setMarkers();
+        appvm.showLocationInfo(false);
     });
 
     // ###React to user interaction with the venue condition selector###
     self.conditionSelected.subscribe(function(newValue) {
         var numVal = newValue ? Math.max(1, Number(newValue.slice(0, 1))) : 1;
 
-        mapControl.setAcceptableCondition(numVal);
-        mapControl.setMarkers();
-        appvm.showLocationInfo(false);
 
         // Reflect selection in qualifyingLocations
         self.qualifyingLocations.removeAll();
@@ -125,6 +126,10 @@ function AppViewModel() {
                 self.qualifyingLocations.push(loc);
             }
         });
+
+        mapControl.setAcceptableCondition(numVal);
+        mapControl.setMarkers();
+        appvm.showLocationInfo(false);
     });
 
     // ###React to user selection of marker on map###
@@ -146,7 +151,25 @@ function AppViewModel() {
         // set the infoTitle and reveal the info-box
         appvm.infoTitle(details.name);
         appvm.showLocationInfo(true); // Ensure the location detals box is showing
+
+        // update the list view to reflect the change in location selection
+        var listItem = appvm.qualifyingLocations().filter(function (loc) {
+          return loc.locID == newValue;
+        });
+        listItemClicked(listItem[0]);
     });      
+
+    listItemClicked = function(location) {
+        new google.maps.event.trigger(location.marker, 'click');
+    
+        $.each(appvm.qualifyingLocations(), function(idx, loc) {
+            if (loc.locID == location.locID) {
+                appvm.qualifyingLocations()[idx].selected(true);
+            } else {
+                appvm.qualifyingLocations()[idx].selected(false);
+            }
+        });
+    }
 }
 
 // ###Create the knockout.js view model and apply bindings###
